@@ -5,12 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css' )}}">
 </head>
 
 <body>
-    {% block content %}
+    <div class="info-bar">
+        <p>User: username</p>
+        <p>Dec 00</p>
+        <p>12:59PM</p>
+    </div>
+    <div class="content">
+        {% block content %}
 
-    {% endblock %}
+        {% endblock %}
+    </div>
+    <div class="info-bar">
+        <p>172.16.0.105</p>
+        <p>Connected</p>
+        <p>V : 1.0.0</p>
+    </div>
 </body>
 
 </html>
