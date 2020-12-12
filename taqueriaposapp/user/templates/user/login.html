@@ -1,0 +1,12 @@
+{% extends "layouts/base.html" %}
+
+
+{% block content %}
+<form action="" method="POST">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.username.label }}
+        {{ form.username() }}
+    </p>
+</form>
+{% endblock %}

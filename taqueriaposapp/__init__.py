@@ -12,8 +12,12 @@ def create_app():
     app.config.from_object('config.DevConfig')
 
     # import & register core blueprint
-    from .core import core as core_bp
-    app.register_blueprint(core_bp)
+    from .core import core
+    app.register_blueprint(core)
+
+    # import & register user blueprint
+    from .user import user
+    app.register_blueprint(user)
 
     # extensions
     extensions(app)
@@ -27,4 +31,3 @@ def extensions(app):
     """
     db.init_app(app)
     migrate.init_app(app, db)
-    pass
