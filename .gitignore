@@ -26,6 +26,7 @@ pyvenv.cfg
 pip-selfcheck.json
 */__pycache__
 __pycache__/*
+__pycache__
 
 migrations/*
 html/*
