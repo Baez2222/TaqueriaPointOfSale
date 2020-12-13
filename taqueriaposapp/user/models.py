@@ -24,7 +24,7 @@ class ProductModel(UserMixin, db.Model):
     productName = db.Column(db.String(25), index=True)
     priceEach = db.Column(db.Float)
     textDescription = db.Column(db.String(200), default=None)
-    image = db.Column(db.LongBlob)
+    image = db.Column(db.LargeBinary)
     productSold = db.relationship('OrderDetailsModel', backref='product', lazy=False)
 
 class OrderModel(UserMixin, db.Model):
@@ -43,6 +43,6 @@ class OrderDetailsModel(UserMixin, db.Model):
     OrderDetails Model: contents of each order
     """
     __tablename__ = 'orderdetails'
-    orderNumber = db.Column(db.Integer, db.ForeignKey('order.orderNumber'), nullable=False)
+    orderNumber = db.Column(db.Integer, db.ForeignKey('order.orderNumber'), nullable=False, primary_key=True)
     productCode = db.Column(db.String(25), db.ForeignKey('product.productCode'), nullable=False)
     quantityOrdered = db.Column(db.Integer)
