@@ -1,1 +1,3 @@
-from taqueriaposapp.extensions import db
+from wtforms.validators import ValidationError
+
+from taqueriaposapp.user.models import UserModel

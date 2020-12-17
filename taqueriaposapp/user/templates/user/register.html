@@ -2,7 +2,19 @@
 
 
 {% block content %}
-{% if title %}
-<h1>{{ title }}</h1>
-{% endif %}
+<div class="content justify-center align-center">
+    <div class="wrapper">
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="flex-wrap half">
+                {{ form.username() }}
+                {{ form.email() }}
+                {{ form.password() }}
+                {{ form.password2() }}
+                {{ form.submit() }}
+            </div>
+        </form>
+
+    </div>
+</div>
 {% endblock %}

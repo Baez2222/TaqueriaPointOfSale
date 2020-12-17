@@ -26,4 +26,4 @@ class DevConfig(BaseConfig):
     """
     # TODO: add SQLACLHEMY_DATABASE_URI
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
-        os.path.join(basedir, 'dev.sqlite')
+        os.path.join(basedir, 'db.sqlite3')

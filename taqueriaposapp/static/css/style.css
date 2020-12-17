@@ -3,6 +3,10 @@
     margin: 0;
     padding: 0;
 }
+html,
+body{
+    height: 100vh;
+}
 
 body{
     background-color: black;
@@ -27,24 +31,55 @@ body{
     align-items: center;
 }
 
+.direction-column {
+    flex-direction: column;
+}
+
+.my-5{
+    margin: 5rem 0;
+}
+
 .info-bar {
     display: flex;
     justify-content: space-between;
     margin: 0 5px;
     color: #e7e7e7;
+    max-height: 28px;
 }
 
 
 .content{
     display: flex;
-    height: calc(100vh - 56px);
-    max-height: calc(100vh - 56px);
+    height: calc(100vh - 66px);
+    max-height: calc(100vh - 66px);
     margin: 0 5px;
     background-color: #e7e7e7;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+}
+
+.wrapper {
+    border: solid 3px #151515;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    max-width: 50vw;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-wrap.half input{
+    flex: 1 0 50%;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 35px;
+    margin: 10px 5px;
 }
 
 .login-wrapper {
@@ -81,3 +116,12 @@ body{
     padding: 10px;
     font-size: 40px;
 }
+
+.dot {
+    margin-top: 5px;
+    height: 25px;
+    width: 25px;
+    background-color: #39da39;
+    border-radius: 50%;
+    display: inline-block;
+  }

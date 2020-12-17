@@ -2,17 +2,13 @@
 
 
 {% block content %}
-<div class="info-bar">
-    <p>User: username</p>
-    <p><span id="getMonth"></span> <span id="getMonthDay"></span></p>
-    <p>8:57PM</p>
-</div>
 <div class="content justify-center align-center">
     <div class="login-wrapper">
         <form action="" method="POST">
             {{ form.hidden_tag() }}
             <div class="pad-view">
-                <input id="keypadVar" type="password">
+                {{ form.password() }}
+                <!-- <input id="keypadVar" type="password"> -->
             </div>
             <div class="number-pad">
                 <input type="button" value="1" onClick="addNumber(this);">
@@ -24,17 +20,14 @@
                 <input type="button" value="7" onClick="addNumber(this);">
                 <input type="button" value="8" onClick="addNumber(this);">
                 <input type="button" value="9" onClick="addNumber(this);">
-                <input type="reset" value="Clear">
+                <input type="button" value="" disabled>
                 <input type="button" value="0" onClick="addNumber(this);">
-                <input type="submit" value="Enter">
+                <input type="submit" value="" disabled>
+                <input type="reset" value="Clear">
+                {{ form.submit() }}
             </div>
         </form>
 
     </div>
-</div>
-<div class="info-bar">
-    <p>172.16.0.105</p>
-    <p>Connected</p>
-    <p>V : 1.0.0</p>
 </div>
 {% endblock %}

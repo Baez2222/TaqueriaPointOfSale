@@ -6,22 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css' )}}">
+    <script src="{{ url_for('static', filename='js/time.js') }}"></script>
 </head>
 
-<body>
+<body onload="showTime()">
     <div class="info-bar">
         <p>User: username</p>
-        <p>Dec 00</p>
-        <p>12:59PM</p>
+        <p><span id="getMonth"></span> <span id="getMonthDay"></span></p>
+        <p id="DigitalCLOCK"></p>
     </div>
-    <div class="content">
-        {% block content %}
+    {% block content %}
 
-        {% endblock %}
-    </div>
+    {% endblock %}
     <div class="info-bar">
-        <p>172.16.0.105</p>
-        <p>Connected</p>
+        <p><span class="dot"></span></p>
+        <p>messages</p>
         <p>V : 1.0.0</p>
     </div>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
