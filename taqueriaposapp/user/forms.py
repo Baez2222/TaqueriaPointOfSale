@@ -54,3 +54,8 @@ class ProfileForm(FlaskForm):
     User Profile Form
     """
     pass
+
+class MenuForm(FlaskForm):
+    """
+    Main page menu items
+    """
