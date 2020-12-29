@@ -21,7 +21,7 @@ class UserModel(ResourceMixin, UserMixin, db.Model):
     password = db.Column(db.Integer)
     phone = db.Column(db.Integer)
     remember_me = db.Column(db.Boolean(), default=False)
-    server = db.relationship('OrderModel', backref='server', lazy=False)
+    serverID = db.Column(db.Integer, nullable=False)
 
     def is_safe(self, username):
         """
@@ -57,8 +57,6 @@ class ProductModel(ResourceMixin, db.Model):
     priceEach = db.Column(db.Float)
     textDescription = db.Column(db.String(200), default=None)
     image = db.Column(db.LargeBinary)
-    productSold = db.relationship(
-        'OrderDetailsModel', backref='product', lazy=False)
 
 
 class OrderModel(ResourceMixin, db.Model):
@@ -69,9 +67,7 @@ class OrderModel(ResourceMixin, db.Model):
     orderNumber = db.Column(db.Integer, primary_key=True)
     orderDate = db.Column(db.DateTime)
     comments = db.Column(db.Text)
-    details = db.relationship('OrderDetailsModel', backref='order', lazy=False)
-    serverID = db.Column(db.Integer, db.ForeignKey(
-        'users.id'), nullable=False)
+    serverID = db.Column(db.Integer, nullable=False)
 
 
 class OrderDetailsModel(ResourceMixin, db.Model):
@@ -80,8 +76,6 @@ class OrderDetailsModel(ResourceMixin, db.Model):
     """
     __tablename__ = 'orderdetails'
     id = db.Column(db.Integer, primary_key=True)
-    orderNumber = db.Column(db.Integer, db.ForeignKey(
-        'order.orderNumber'), nullable=False, primary_key=True)
-    productCode = db.Column(db.Integer, db.ForeignKey(
-        'products.productCode'), nullable=False)
+    orderNumber = db.Column(db.Integer, nullable=False)
+    productCode = db.Column(db.Integer, nullable=False)
     quantityOrdered = db.Column(db.Integer)
