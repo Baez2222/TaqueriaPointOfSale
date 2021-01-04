@@ -55,7 +55,12 @@ class ProfileForm(FlaskForm):
     """
     pass
 
-class MenuForm(FlaskForm):
+class CartForm(FlaskForm):
     """
-    Main page menu items
+    Main page cart items
     """
+    cartItems = StringField("Cart Items")
+    
+    submit = SubmitField("Submit")
+    
+    

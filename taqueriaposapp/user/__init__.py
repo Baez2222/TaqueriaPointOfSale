@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for
 from .models import UserModel
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, CartForm
+import os
 
 user = Blueprint('user', __name__,
                  template_folder='templates', url_prefix='/user')
@@ -36,3 +37,16 @@ def dashboard():
     User Dashboard View
     """
     return render_template('user/dashboard.html', title='Dashboard')
+
+@user.route('/pointofsale', methods=['POST', 'GET'])
+def pointofsale():
+    """
+    Point of Sale main page:
+        - menu items
+        - items in cart
+        - keypad
+        - menu options bar on top
+    """
+    form = CartForm()
+    return render_template('user/pointofsale.html', title='PointOfSale', form=form)
+    
