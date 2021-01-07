@@ -1,10 +1,12 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, jsonify, request
 from .models import UserModel
 from .forms import LoginForm, RegisterForm, CartForm
 import os
 
 user = Blueprint('user', __name__,
                  template_folder='templates', url_prefix='/user')
+
+cartList = []
 
 
 @user.route('/login', methods=['POST', 'GET'])
@@ -48,5 +50,13 @@ def pointofsale():
         - menu options bar on top
     """
     form = CartForm()
-    return render_template('user/pointofsale.html', title='PointOfSale', form=form)
+    return render_template('user/pointofsale.html', title='PointOfSale', form=form, cartList=cartList)
+
+@user.route('/addCartItem')
+def addCartItem():
+    try:
+        itemName = ["taco", 2.00]
+        return jsonify(result=cartList.append(itemName))
+    except Exception as e:
+	    return str(e)
     
