@@ -59,8 +59,6 @@ class CartForm(FlaskForm):
     """
     Main page cart items
     """
-    cartItems = StringField("Cart Items")
-    
     submit = SubmitField("Submit")
     
     

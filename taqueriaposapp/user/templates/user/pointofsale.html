@@ -82,9 +82,9 @@
 <!-- taco onClick jquery script-->
 <script type=text/javascript>
     $(function() {
-      $('a#tacoButton').bind('click', function() {
+      $('.itemOptionAction').bind('click', function() {
         $.getJSON('/user/addCartItem', {
-          itemName: "tacos",
+          itemName: $(this).attr('id'),
         }, function(data) {
           $("#result").text(data.result);
           location.reload();
@@ -99,20 +99,25 @@
     <div class="cart" id="cart">
         <p id=result>
             {% for item in cartList %}
-            <p>{{ item[0], item[1]}} </p>
+            <p>{{ item[0], item[1], item[2] }} </p>
             {% endfor %}
         </p>
+        <form action="" method="POST">
+          {{ form.hidden_tag() }}
+          {{ form.submit() }}
+        </form>
     </div>
     <div class="one">
         <form>
-            <a href="#" id=tacoButton>
+            <a href="#" id=tacoButton class="itemOptionAction">
                 <button type = "submit" name = "tacos" value = "tacoImage">
                     <img src="{{ url_for('static', filename='images/tacos.jpg')}}" width="100" height ="50"/></button></a>
         </form>
     </div>
     <div class="two">
-        <button type = "submit" name = "tortas" value = "tortaImage">
-        <img src="{{ url_for('static', filename='images/tortas.jpg')}}" width="100" height ="50"/></button>
+        <a href="#" id=tortaButton class="itemOptionAction">
+            <button type = "submit" name = "tortas" value = "tortaImage">
+                <img src="{{ url_for('static', filename='images/tortas.jpg')}}" width="100" height ="50"/></button></a>
     </div>
     <div class="three">
         <button type = "submit" name = "hamburguesas" value = "hamburguesasImage">

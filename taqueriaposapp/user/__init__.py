@@ -1,12 +1,22 @@
 from flask import Blueprint, render_template, redirect, url_for, jsonify, request
-from .models import UserModel
+from .models import UserModel, OrderModel, OrderDetailsModel
 from .forms import LoginForm, RegisterForm, CartForm
 import os
+from sqlalchemy.orm import sessionmaker, scoped_session
+import sqlalchemy
+import pymysql
 
 user = Blueprint('user', __name__,
                  template_folder='templates', url_prefix='/user')
 
 cartList = []
+def emptyCart():
+    global cartList
+    cartList = []
+
+engine = sqlalchemy.create_engine('mysql+pymysql://' + os.getenv("DB_USER") + ':' + os.getenv("DB_PASS") + '@' + os.getenv("DB_HOST") + ':' + os.getenv("DB_PORT") + '/' + os.getenv("DB_NAME"))
+Session = scoped_session(sessionmaker(bind=engine))
+s = Session()
 
 
 @user.route('/login', methods=['POST', 'GET'])
@@ -50,13 +60,25 @@ def pointofsale():
         - menu options bar on top
     """
     form = CartForm()
+
+    if form.validate_on_submit():
+        s.add(OrderModel(comments="test", serverID=123))
+        emptyCart()
+        return redirect(url_for('.pointofsale'))
     return render_template('user/pointofsale.html', title='PointOfSale', form=form, cartList=cartList)
 
 @user.route('/addCartItem')
 def addCartItem():
     try:
-        itemName = ["taco", 2.00]
-        return jsonify(result=cartList.append(itemName))
+        item = request.args.get('itemName', 0, type=str)
+        uniqueBool = True
+        for i in cartList:
+            if item == i[0]:
+                i[2] += 1
+                uniqueBool = False
+        if uniqueBool:
+            item = [item, 2.00, 1]
+            cartList.append(item)
+        return jsonify(result=cartList)
     except Exception as e:
 	    return str(e)
-    
