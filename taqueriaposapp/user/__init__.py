@@ -62,23 +62,32 @@ def pointofsale():
     form = CartForm()
 
     if form.validate_on_submit():
-        s.add(OrderModel(comments="test", serverID=123))
+        # commit order to order model
+        orderAdded = s.add(OrderModel(comments="test", serverID=123))
+        s.commit()
+        # commit order details of current order into OrderDetails table
+        currOrderNumber = s.execute("SELECT LAST_INSERT_ID()").fetchone()[0]
+        for item in cartList:
+            s.add(OrderDetailsModel(orderNumber=currOrderNumber, productCode=item[1], quantityOrdered=item[3]))
+            s.commit()
         emptyCart()
         return redirect(url_for('.pointofsale'))
+    
     return render_template('user/pointofsale.html', title='PointOfSale', form=form, cartList=cartList)
 
 @user.route('/addCartItem')
 def addCartItem():
     try:
-        item = request.args.get('itemName', 0, type=str)
+        itemCode = request.args.get('itemCode', 0, type=int)
+        itemName = s.execute("SELECT p.productName FROM products p WHERE p.productCode = %s" % (itemCode)).first()
         uniqueBool = True
         for i in cartList:
-            if item == i[0]:
-                i[2] += 1
+            if itemCode == i[1]:
+                i[3] += 1
                 uniqueBool = False
         if uniqueBool:
-            item = [item, 2.00, 1]
-            cartList.append(item)
+            itemCode = [str(itemName.productName), itemCode, 2.00, 1]
+            cartList.append(itemCode)
         return jsonify(result=cartList)
     except Exception as e:
 	    return str(e)

@@ -1,4 +1,4 @@
-USE `taqueria_db`;
+USE `hds_db`;
 
 INSERT INTO `products`(`productCode`, `productName`, `priceEach`, `textDescription`)
 	VALUES (101, "tacos", 2.00, "Tacos de diferente tipos de carne"),
