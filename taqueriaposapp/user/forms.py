@@ -1,6 +1,6 @@
 from usernames import is_safe_username
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, SubmitField, PasswordField
+from wtforms import StringField, BooleanField, SubmitField, PasswordField, IntegerField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 
 from taqueriaposapp.user.models import UserModel
@@ -59,6 +59,6 @@ class CartForm(FlaskForm):
     """
     Main page cart items
     """
-    submit = SubmitField("Submit")
+    submit = SubmitField("Checkout")
     
     

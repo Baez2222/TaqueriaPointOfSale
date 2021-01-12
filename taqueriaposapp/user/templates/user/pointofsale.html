@@ -74,6 +74,93 @@
         grid-row-end: 4;
         background-color: lightblue;
       }
+
+      /* Style the tab */
+      .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+      }
+
+      /* Style the buttons that are used to open the tab content */
+      .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+      }
+
+      /* Change background color of buttons on hover */
+      .tab button:hover {
+        background-color: #ddd;
+      }
+
+      /* Create an active/current tablink class */
+      .tab button.active {
+        background-color: #ccc;
+      }
+
+
+      /* Popup box BEGIN */
+      .hover_bkgr_fricc{
+        background:rgba(0,0,0,.4);
+        cursor:pointer;
+        display:none;
+        height:100%;
+        position:fixed;
+        text-align:center;
+        top:0;
+        width:100%;
+        z-index:10000;
+      }
+      .hover_bkgr_fricc .helper{
+        display:inline-block;
+        height:100%;
+        vertical-align:middle;
+      }
+      .hover_bkgr_fricc > div {
+        background-color: #fff;
+        box-shadow: 10px 10px 60px #555;
+        display: inline-block;
+        height: auto;
+        max-width: 551px;
+        min-height: 100px;
+        vertical-align: middle;
+        width: 60%;
+        position: relative;
+        border-radius: 8px;
+        padding: 15px 5%;
+      }
+      .popupCloseButton {
+        background-color: #fff;
+        border: 3px solid #999;
+        border-radius: 50px;
+        cursor: pointer;
+        display: inline-block;
+        font-family: arial;
+        font-weight: bold;
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        font-size: 25px;
+        line-height: 30px;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+      }
+      .popupCloseButton:hover {
+        background-color: #ccc;
+      }
+      .trigger_popup_fricc {
+        cursor: pointer;
+        font-size: 20px;
+        margin: 20px;
+        display: inline-block;
+        font-weight: bold;
+      }
 </style>
 
 
@@ -87,13 +174,62 @@
           itemCode: $(this).attr('id'),
         }, function(data) {
           $("#result").text(data.result);
-          location.reload();
+          //location.reload();
         });
         return false;
       });
     });
 </script>
 
+<!-- sidemenu tab script-->
+<script>
+  function changeTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+  
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+  
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+  
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    for (i=0; i < document.getElementsByClassName(tabName).length; i++){
+      document.getElementsByClassName(tabName)[i].style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  }
+</script>
+
+<!-- pop up script -->
+<script>
+  $(window).load(function () {
+    $(".trigger_popup_fricc").click(function(){
+       $('.hover_bkgr_fricc').show();
+    });
+    $('.popupCloseButton').click(function(){
+        $('.hover_bkgr_fricc').hide();
+    });
+  });
+</script>
+
+<!-- content inside quantity pop up box-->
+<div class="hover_bkgr_fricc">
+  <span class="helper"></span>
+  <div>
+      <div class="popupCloseButton">&times;</div>
+      <form action="POST" id=quantForm>
+        <input type="text">
+        <input type="submit" value="Enter">
+      </form>
+  </div>
+</div>
 
 <div class="wrapper">
     <div class="cart" id="cart">
@@ -107,34 +243,45 @@
           {{ form.submit() }}
         </form>
     </div>
-    <div class="one">
-        <form>
-            <a href="#" id=101 class="itemOptionAction">
-                <button type = "submit" name = "tacos" value = "tacoImage">
-                    <img src="{{ url_for('static', filename='images/tacos.jpg')}}" width="100" height ="50"/></button></a>
-        </form>
+    
+    <div class="sidemenu tab">
+      <button class="tablinks" onclick="changeTab(event, 'entrees')">Entrees</button>
+      <button class="tablinks" onclick="changeTab(event, 'beverages')">Beverages</button>
     </div>
-    <div class="two">
+
+    
+    <div class="one tabcontent entrees">
+      <form>
+          <a href="#" id=101 class="itemOptionAction trigger_popup_fricc">
+              <button type = "submit" name = "tacos" value = "tacoImage">
+                  <img src="{{ url_for('static', filename='images/tacos.jpg')}}" width="100" height ="50"/></button></a>
+      </form>
+    </div>
+    <div class="two tabcontent entrees">
         <a href="#" id=102 class="itemOptionAction">
             <button type = "submit" name = "tortas" value = "tortaImage">
                 <img src="{{ url_for('static', filename='images/tortas.jpg')}}" width="100" height ="50"/></button></a>
     </div>
-    <div class="three">
+    <div class="three tabcontent entrees">
         <button type = "submit" name = "hamburguesas" value = "hamburguesasImage">
         <img src="{{ url_for('static', filename='images/hamburguesa.jpg')}}" width="100" height ="50"/></button>
     </div>  
-    <div class="four">
+    <div class="four tabcontent entrees">
         <button type = "submit" name = "tapatios" value = "tapatiosImage">
         <img src="{{ url_for('static', filename='images/tapatios.jfif')}}" width="100" height ="50"/></button>
     </div>
-    <div class="five">
+    <div class="five tabcontent entrees">
         <button type = "submit" name = "gorditas" value = "gorditasImage">
         <img src="{{ url_for('static', filename='images/gorditas.jpg')}}" width="100" height ="50"/></button>
     </div>
-    <div class="six">
+    <div class="six tabcontent entrees">
         <button type = "submit" name = "quesadillas" value = "quesadillasImage">
         <img src="{{ url_for('static', filename='images/quesadillas.jfif')}}" width="100" height ="50"/></button>
     </div>
+    <div class="tabcontent beverages">
+
+    </div>
+    
 </div>
 
 {% endblock %}
