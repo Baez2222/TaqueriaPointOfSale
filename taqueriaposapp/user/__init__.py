@@ -79,15 +79,23 @@ def pointofsale():
 def addCartItem():
     try:
         itemCode = request.args.get('itemCode', 0, type=int)
-        itemName = s.execute("SELECT p.productName FROM products p WHERE p.productCode = %s" % (itemCode)).first()
-        uniqueBool = True
-        for i in cartList:
-            if itemCode == i[1]:
-                i[3] += 1
-                uniqueBool = False
-        if uniqueBool:
-            itemCode = [str(itemName.productName), itemCode, 2.00, 1]
-            cartList.append(itemCode)
+        if itemCode != 0:
+            itemName = s.execute("SELECT p.productName FROM products p WHERE p.productCode = %s" % (itemCode)).first()
+            uniqueBool = True
+            for i in cartList:
+                if itemCode == i[2]:
+                    i[0] = False
+                    uniqueBool = False
+            if uniqueBool:
+                itemCode = [False, str(itemName.productName), itemCode, 2.00, 0]
+                cartList.append(itemCode)
+        else:
+            for i in cartList:
+                if i[0] == False:
+                    quantity = request.args.get('quantity', 0, type=int)
+                    i[4] += quantity
+                    i[0] = True
+                    break
         return jsonify(result=cartList)
     except Exception as e:
 	    return str(e)
