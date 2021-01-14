@@ -87,14 +87,19 @@ def addCartItem():
                     i[0] = False
                     uniqueBool = False
             if uniqueBool:
-                itemCode = [False, str(itemName.productName), itemCode, 2.00, 0]
+                itemCode = [False, str(itemName.productName), itemCode, 2.00, 0, '']
                 cartList.append(itemCode)
         else:
             for i in cartList:
                 if i[0] == False:
-                    quantity = request.args.get('quantity', 0, type=int)
-                    i[4] += quantity
-                    i[0] = True
+                    meat = request.args.get('meat', '', type=str)
+                    if i[5] == meat or i[5] == '':
+                        quantity = request.args.get('quantity', 0, type=int)
+                        i[4] += quantity
+                        i[0] = True
+                        i[5] = meat
+                    else:
+                        cartList.append([True, i[1], i[2], 2.00, 0, meat])
                     break
         return jsonify(result=cartList)
     except Exception as e:

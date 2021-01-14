@@ -185,12 +185,12 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<!-- taco onClick jquery script-->
+<!-- item onClick jquery script-->
 <script type=text/javascript>
     $(function() {
       $('.itemOptionAction').bind('click', function() {
         $.getJSON('/user/addCartItem', {
-          itemCode: $(this).attr('id'),
+          itemCode: $(this).attr('id'), 
         }, function(data) {
           $("#result").text(data.result);
         });
@@ -247,6 +247,7 @@
     $('#quantSubmit').bind('click', function() {
       $.getJSON('/user/addCartItem', {
         quantity: document.quantForm.quantity.value,
+        meat: $('input[name="meatType"]:checked').attr('value'),
       }, function(data) {
         $("#result").text(data.result);
         //location.reload();
@@ -265,13 +266,43 @@
         <input type="text" id='quantity' name='quantity'>
         <br>
         <label>
-          <input type="radio" name="pastor" value="small" checked id=201>
+          <input type="radio" name="meatType" value="pastor" checked id=201>
           <img src="{{ url_for('static', filename='images/pastor.jfif')}}" width="50" height="50">
         </label>
-        
+
         <label>
-          <input type="radio" name="pastor" value="big">
+          <input type="radio" name="meatType" value="asada" id=202>
           <img src="{{ url_for('static', filename='images/asada.jfif')}}" width="50" height="50">
+        </label>
+
+        <label>
+          <input type="radio" name="meatType" value="barbacoa" id=203>
+          <img src="{{ url_for('static', filename='images/barbacoa.jpg')}}" width="50" height="50">
+        </label>
+
+        <label>
+          <input type="radio" name="meatType" value="desebrada" id=204>
+          <img src="{{ url_for('static', filename='images/desebrada.jfif')}}" width="50" height="50">
+        </label>
+
+        <label>
+          <input type="radio" name="meatType" value="buche" id=205>
+          <img src="{{ url_for('static', filename='images/buche.jpg')}}" width="50" height="50">
+        </label>
+
+        <label>
+          <input type="radio" name="meatType" value="chicharron" id=206>
+          <img src="{{ url_for('static', filename='images/chicharron.jpg')}}" width="50" height="50">
+        </label>
+
+        <label>
+          <input type="radio" name="meatType" value="lengua" id=207>
+          <img src="{{ url_for('static', filename='images/lengua.jpg')}}" width="50" height="50">
+        </label>
+
+        <label>
+          <input type="radio" name="meatType" value="tripa" id=208>
+          <img src="{{ url_for('static', filename='images/tripa.jpg')}}" width="50" height="50">
         </label>
 
         <br>
@@ -284,7 +315,7 @@
     <div class="cart" id="cart">
         <p id=result>
             {% for item in cartList %}
-            <p>{{ item[1], item[2], item[3], item[4] }} </p>
+            <p>{{ item[1], item[2], item[3], item[4], item[5] }} </p>
             {% endfor %}
         </p>
         <form action="" method="POST">
