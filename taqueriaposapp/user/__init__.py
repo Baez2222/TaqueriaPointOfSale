@@ -99,7 +99,7 @@ def addCartItem():
                         i[0] = True
                         i[5] = meat
                     else:
-                        cartList.append([True, i[1], i[2], 2.00, 0, meat])
+                        cartList.append([True, i[1], i[2], 2.00, quantity, meat])
                     break
         return jsonify(result=cartList)
     except Exception as e:

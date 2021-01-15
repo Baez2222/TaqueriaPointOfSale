@@ -233,6 +233,7 @@
     });
     $('.popupCloseButton').click(function(){
         $('.hover_bkgr_fricc').hide();
+        location.reload();
     });
     $('#quantSubmit').click(function(){
       $('.hover_bkgr_fricc').hide();
@@ -315,7 +316,9 @@
     <div class="cart" id="cart">
         <p id=result>
             {% for item in cartList %}
-            <p>{{ item[1], item[2], item[3], item[4], item[5] }} </p>
+              {% if item[0] %}
+                <p>{{ item[1], item[2], item[3], item[4], item[5] }} </p>
+              {% endif %}
             {% endfor %}
         </p>
         <form action="" method="POST">
