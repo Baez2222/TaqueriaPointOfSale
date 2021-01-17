@@ -235,7 +235,7 @@
         $('.hover_bkgr_fricc').hide();
         location.reload();
     });
-    $('#quantSubmit').click(function(){
+    $('#meatSubmit').click(function(){
       $('.hover_bkgr_fricc').hide();
       location.reload();
   });
@@ -245,9 +245,9 @@
 <!-- pop up quantity submit onClick jquery script-->
 <script type=text/javascript>
   $(function() {
-    $('#quantSubmit').bind('click', function() {
+    $('#meatSubmit').bind('click', function() {
       $.getJSON('/user/addCartItem', {
-        quantity: document.quantForm.quantity.value,
+        quantity: document.quantForm.keypadVar.value,
         meat: $('input[name="meatType"]:checked').attr('value'),
       }, function(data) {
         $("#result").text(data.result);
@@ -263,9 +263,7 @@
   <span class="helper"></span>
   <div>
       <div class="popupCloseButton">&times;</div>
-      <form action="POST" name=quantForm id=quantForm>
-        <input type="text" id='quantity' name='quantity'>
-        <br>
+      <form action="" method="POST" name=meatForm id=meatForm>
         <label>
           <input type="radio" name="meatType" value="pastor" checked id=201>
           <img src="{{ url_for('static', filename='images/pastor.jfif')}}" width="50" height="50">
@@ -307,7 +305,7 @@
         </label>
 
         <br>
-        <input type="submit" value="Enter" id='quantSubmit'>
+        <input type="submit" value="Enter" id='meatSubmit'>
       </form>
   </div>
 </div>
@@ -321,10 +319,6 @@
               {% endif %}
             {% endfor %}
         </p>
-        <form action="" method="POST">
-          {{ form.hidden_tag() }}
-          {{ form.submit() }}
-        </form>
     </div>
     
     <div class="sidemenu tab">
@@ -363,6 +357,26 @@
     </div>
     <div class="tabcontent beverages">
 
+    </div>
+
+    <div class="numberpad">
+      <form action="" method="POST" name=quantForm id=quantForm>
+        <input type="text" id="keypadVar" name="keypadVar"><br>
+        <input type="button" value="1" onClick="addNumber(this);">
+        <input type="button" value="2" onClick="addNumber(this);">
+        <input type="button" value="3" onClick="addNumber(this);">
+        <input type="button" value="4" onClick="addNumber(this);">
+        <input type="button" value="5" onClick="addNumber(this);">
+        <input type="button" value="6" onClick="addNumber(this);">
+        <input type="button" value="7" onClick="addNumber(this);">
+        <input type="button" value="8" onClick="addNumber(this);">
+        <input type="button" value="9" onClick="addNumber(this);">
+        <input type="button" value="0" onClick="addNumber(this);">
+        <input type="reset" value="Clear">
+        {{ form.hidden_tag() }}
+        {{ form.submit() }}
+        
+      </form>
     </div>
     
 </div>
