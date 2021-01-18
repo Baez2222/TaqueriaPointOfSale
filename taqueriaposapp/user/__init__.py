@@ -57,7 +57,6 @@ def pointofsale():
         - menu items
         - items in cart
         - keypad
-        - menu options bar on top
     """
     form = CartForm()
 
@@ -68,7 +67,7 @@ def pointofsale():
         # commit order details of current order into OrderDetails table
         currOrderNumber = s.execute("SELECT LAST_INSERT_ID()").fetchone()[0]
         for item in cartList:
-            s.add(OrderDetailsModel(orderNumber=currOrderNumber, productCode=item[1], quantityOrdered=item[3]))
+            s.add(OrderDetailsModel(orderNumber=currOrderNumber, productCode=item[2], quantityOrdered=item[4]))
             s.commit()
         emptyCart()
         return redirect(url_for('.pointofsale'))
@@ -92,13 +91,14 @@ def addCartItem():
         else:
             for i in cartList:
                 if i[0] == False:
+                    quantity = request.args.get('quantity', 1, type=int)
                     meat = request.args.get('meat', '', type=str)
                     if i[5] == meat or i[5] == '':
-                        quantity = request.args.get('quantity', 0, type=int)
                         i[4] += quantity
                         i[0] = True
                         i[5] = meat
                     else:
+                        i[0] = True
                         cartList.append([True, i[1], i[2], 2.00, quantity, meat])
                     break
         return jsonify(result=cartList)
