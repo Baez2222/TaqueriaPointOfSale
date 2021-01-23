@@ -180,6 +180,48 @@
       [type=radio]:checked + img {
         outline: 2px solid #f00;
       }
+
+
+      .dropbtn {
+        background-color: #3498DB;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+      
+      .dropbtn:hover, .dropbtn:focus {
+        background-color: #2980B9;
+      }
+      
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: 0;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+      }
+      
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+      
+      .dropdown a:hover {background-color: #ddd;}
+      
+      .show {display: block;}
 </style>
 
 
@@ -310,12 +352,56 @@
   </div>
 </div>
 
+<!-- toggle dropdown menu on cart item-->
+<script>
+  /* When the user clicks on the button,
+  toggle between hiding and showing the dropdown content */
+  function myFunction(cartItem_ID) {
+    document.getElementById(cartItem_ID).classList.toggle("show");
+  }
+
+  // Close the dropdown menu if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
+</script>
+
+<script>
+  function toggleExtraPopups(ID){
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for ( i = 0; i < dropdowns.length; i++){
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show') && openDropdown.id != ID){
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+</script>
+
 <div class="wrapper">
     <div class="cart" id="cart">
         <p id=result>
             {% for item in cartList %}
-              {% if item[0] %}
-                <p>{{ item[1], item[2], item[3], item[4], item[5] }} </p>
+              <div class="dropdown">
+                {% if item[0] %}
+                  <button onClick="myFunction('{{ item[1] }}_{{ item[5] }}'); toggleExtraPopups('{{ item[1] }}_{{ item[5] }}')" class="dropbtn">{{ item[1], item[2], item[3], item[4], item[5] }}</button>
+                  <div id="{{ item[1]}}_{{ item[5] }}" class="dropdown-content">
+                    <a href="#">{{ item[1] }}_{{ item[5] }}</a>
+                    <a href="#">Link 2</a>
+                    <a href="#">Link 3</a>
+                  </div>
+              </div>
+                
               {% endif %}
             {% endfor %}
         </p>
